@@ -72,7 +72,7 @@ export const CartDrawer = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 z-[120] bg-black/60 backdrop-blur-sm"
+              className="fixed inset-0 z-120 bg-black/60 backdrop-blur-sm min-h-screen"
             />
 
             <motion.div
@@ -80,7 +80,7 @@ export const CartDrawer = () => {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 h-screen w-full max-w-md z-[130] bg-background shadow-2xl flex flex-col"
+              className="fixed top-0 right-0 h-screen w-full max-w-md z-130 bg-background shadow-2xl flex flex-col"
             >
               {/* HEADER */}
               <div className="p-6 border-b border-border flex items-center justify-between">
@@ -158,6 +158,15 @@ export const CartDrawer = () => {
                             <Plus className="size-3" />
                           </button>
                         </div>
+                        <div>
+                          Total:
+                          <b>
+                            $
+                            {(
+                              item.quantity * Number(item.price)
+                            ).toLocaleString("es-AR")}
+                          </b>
+                        </div>
                       </div>
                     </motion.div>
                   ))
@@ -194,7 +203,7 @@ export const CartDrawer = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-black/80  h-screen"
+            className="fixed inset-0 z-150 flex items-center justify-center p-4 bg-black/80  h-screen"
           >
             <motion.div
               initial={{ scale: 0.9, y: 20 }}
@@ -213,7 +222,7 @@ export const CartDrawer = () => {
               </div>
 
               {/* Cuerpo del Chat */}
-              <div className="p-4 space-y-4 min-h-[200px] flex flex-col justify-end">
+              <div className="p-4 space-y-4 min-h-50 flex flex-col justify-end">
                 <div className="bg-white p-3 rounded-lg rounded-tl-none shadow-sm max-w-[85%] self-start text-[11px] leading-relaxed">
                   ¡Hola! ¿Cómo estás? Contanos qué sabores te gustaría pedir hoy
                   🍪
@@ -232,11 +241,11 @@ export const CartDrawer = () => {
                   onClick={() => setShowWSModal(false)}
                   className="flex-1 py-3 text-xs font-bold uppercase text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Editar
+                  Volver
                 </button>
                 <button
                   onClick={handleFinalSend}
-                  className="flex-[2] py-3 bg-[#25d366] text-white rounded-xl font-bold uppercase text-xs shadow-md hover:bg-[#1ebe57] flex items-center justify-center gap-2"
+                  className="flex-2 py-3 bg-[#25d366] text-white rounded-xl font-bold uppercase text-xs shadow-md hover:bg-[#1ebe57] flex items-center justify-center gap-2"
                 >
                   <Check className="size-4" /> Enviar ahora
                 </button>

@@ -25,6 +25,10 @@
   --radius: 0.5rem;
 }
 
+button{
+  @apply cursor-pointer
+}
+
 @layer base {
   body {
     @apply bg-background text-foreground antialiased;

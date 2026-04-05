@@ -70,7 +70,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ sections, activeSection }) => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setOpen(false)}
-              className="fixed inset-0 z-110 bg-black/40 backdrop-blur-sm"
+              className="fixed inset-0 z-110 bg-black/40 backdrop-blur-sm min-h-screen"
             />
 
             {/* Panel del Menú - Fondo Crema */}
