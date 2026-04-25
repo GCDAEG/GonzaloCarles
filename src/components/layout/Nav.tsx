@@ -26,7 +26,7 @@ export function Navbar() {
       layout
       ref={ref}
       className={cn(
-        "sticky h-20 top-0 z-[300] w-full transition-all shadow-sm flex justify-center",
+        "sticky h-20 top-0 z-[300] w-full transition-all  flex justify-center max-w-2xl lg:max-w-3xl",
       )}
     >
       {/* <Banner isScrolled={isScrolled} /> */}

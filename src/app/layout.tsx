@@ -71,6 +71,7 @@ export default function RootLayout({
           overflow-x-hidden
           bg-background
           min-w-screen
+          flex flex-col items-center
         "
       >
         {/* Opcional: capa extra para overlay si quieres más control */}

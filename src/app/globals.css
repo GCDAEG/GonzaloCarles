@@ -1,113 +1,64 @@
 @import "tailwindcss";
 
-/* PALETA DE COLORES PREMIUM (Rosticería & Food-Tech)
-  Base: Naranja intenso, crema suave y contrastes oscuros.
-*/
+/* PALETA GROMET TAKE AWAY - Identidad Visual */
 :root {
-  --primary: #FF5C00;         /* Naranja "Hambre" intenso */
+  /* Rojo-Naranja Gromet: Estimula el apetito y denota rapidez */
+  --primary: #E63946;         
   --primary-foreground: #FFFFFF;
-  --background: #FFFDFB;      /* Blanco crema muy sutil */
-  --card: #FFFFFF;
-  --card-foreground: #1A1A1A;
-  --accent: #00A344;          /* Verde fresco para "Disponible" o "Agregado" */
-  --muted: #64748b;
-  --border: #F1F1F1;
   
-  /* Radios de borde modernos */
+  /* Color Crema/Hueso: Para que la web se sienta orgánica y no "clínica" */
+  --background: #FFFBF7;      
+  --card: #FFFFFF;
+  --card-foreground: #1D1D1F;
+  
+  /* Verde "Fresco": Para etiquetas de 'Hecho en el momento' o 'Disponible' */
+  --accent: #2A9D8F;          
+  --muted: #8E8E93;
+  --border: #F1E9E0;
+  
   --radius: 1.25rem;
 }
 
-/* --- CONFIGURACIÓN PARA LENIS (Scroll Suave) --- */
-html.lenis {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
-.lenis.lenis-scrolling iframe {
-  pointer-events: none;
-}
-
-/* --- ESTILOS BASE --- */
-body {
-  background-color: var(--background);
-  color: var(--card-foreground);
-  font-feature-settings: "cv02", "cv03", "cv04", "shnt";
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  /* Elimina el molesto recuadro azul al tocar en móviles */
-  -webkit-tap-highlight-color: transparent;
-}
-
+/* --- ESTILOS DE COMPONENTES GROMET --- */
 @layer components {
-  /* Botón Principal: Con sombra suave y efecto de presión */
+  /* El botón de Gromet: Con un gradiente sutil para que parezca "pulsable" */
   .btn-primary {
-    @apply bg-[var(--primary)] text-white font-bold py-4 px-6 rounded-[var(--radius)] 
-           transition-all duration-300 ease-out active:scale-95 
+    @apply bg-gradient-to-br from-[#E63946] to-[#D62828] text-white font-bold py-4 px-6 
+           rounded-[var(--radius)] transition-all duration-300 active:scale-95 
            flex items-center justify-center gap-2 
-           shadow-[0_10px_20px_-5px_rgba(255,92,0,0.3)]
-           hover:shadow-[0_15px_25px_-5px_rgba(255,92,0,0.4)]
-           disabled:opacity-50 disabled:pointer-events-none;
+           shadow-[0_10px_20px_-5px_rgba(230,57,70,0.4)];
   }
 
-  /* Card Estilo Glass: Para el menú flotante o headers */
+  /* Glass Card Gromet: Más cálida y con desenfoque profundo */
   .glass-card {
-    @apply bg-white/70 backdrop-blur-xl border border-white/40 shadow-xl shadow-black/5;
+    @apply bg-white/80 backdrop-blur-2xl border border-white/50 shadow-2xl shadow-orange-900/5;
   }
 
-  /* Cards de Producto: Elevación sutil */
-  .product-card {
-    @apply bg-white rounded-[var(--radius)] border border-[var(--border)]
-           transition-all duration-300 hover:border-[var(--primary)]/30
-           hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)];
-  }
-
-  /* Badge de Categoría */
+  /* Category Pills: Estilo moderno para el menú de navegación */
   .category-pill {
-    @apply px-4 py-2 rounded-full font-medium transition-all whitespace-nowrap
-           border border-transparent;
+    @apply px-5 py-2.5 rounded-full font-bold transition-all whitespace-nowrap
+           border-2 text-sm tracking-tight;
   }
 
   .category-pill-active {
-    @apply bg-[var(--primary)] text-white shadow-md shadow-orange-200;
+    @apply bg-[var(--primary)] text-white border-[var(--primary)] shadow-lg shadow-red-200;
   }
 
   .category-pill-inactive {
-    @apply bg-white text-slate-600 border-slate-100 hover:border-orange-200;
+    @apply bg-white text-[var(--muted)] border-[var(--border)] hover:border-[var(--primary)]/30;
   }
 
-  /* Utilidad para esconder scrollbars en el menú de categorías horizontal */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  .si-scrollbar {
-    -ms-overflow-style: initial;
-    scrollbar-width: 2px;
-  }
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Animación de "latido" para el carrito cuando hay items */
-  .cart-pulse {
-    @apply animate-pulse;
-    animation-duration: 1.5s;
-  }
 }
 
-/* --- SELECCIÓN DE TEXTO --- */
-::selection {
-  background-color: var(--primary);
-  color: white;
+body {
+  background-color: var(--background);
+  color: var(--card-foreground);
+  -webkit-tap-highlight-color: transparent;
 }

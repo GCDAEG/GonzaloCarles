@@ -38,11 +38,14 @@ export default async function Home() {
   const posts: SanityDocument[] = [];
   console.log("los posts", posts);
   return (
-    <main className={`min-h-screen w-full font-base bg-background `}>
+    <main
+      className={`min-h-screen w-full font-base max-w-2xl lg:max-w-3xl shadow-md`}
+    >
       <HeroSection />
       <ProductCatalog posts={posts} />
 
       <LocationSection />
+
       <CartDrawer />
       {/* <Testimonials /> */}
       {/* <WhatsAppChatInput /> */}

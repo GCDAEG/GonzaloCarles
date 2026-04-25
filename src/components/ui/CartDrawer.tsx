@@ -11,147 +11,106 @@ import {
   Plus,
   Minus,
   Check,
-  Flame,
   Truck,
   Store,
   ChevronLeft,
   ArrowRight,
   MapPin,
   FileText,
+  Clock,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { siteConfig } from "@/lib/site/siteConfig";
 import { cn } from "@/lib/utils";
-
-interface CartItem {
-  id: string;
-  title: string;
-  price: string | number;
-  quantity: number;
-  image?: string;
-}
 
 export const CartDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState<1 | 2>(1);
   const [showWSModal, setShowWSModal] = useState(false);
   const [deliveryType, setDeliveryType] = useState<"delivery" | "pickup">(
-    "delivery",
+    "pickup",
   );
   const [address, setAddress] = useState("");
   const [notes, setNotes] = useState("");
 
   const { cart, removeFromCart, updateQuantity, totalPrice } = useCart();
 
-  const WHATSAPP_NUMBER = "5493446123456";
-  const DELIVERY_FEE = 1500;
+  // Configuración específica para Gromet Concordia
+  const WHATSAPP_NUMBER = "5493454284625"; // Número de ejemplo de Concordia
+  const DELIVERY_FEE = 1200;
 
   const finalTotal =
     deliveryType === "delivery" ? totalPrice + DELIVERY_FEE : totalPrice;
   const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
-  // ==================== EFECTOS ====================
-
-  // 1. Bloquear scroll del body cuando el drawer está abierto
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-
-    return () => {
-      document.body.style.overflow = "unset";
-    };
+    document.body.style.overflow = isOpen ? "hidden" : "unset";
   }, [isOpen]);
 
-  // 2. Cerrar automáticamente el drawer cuando el carrito queda vacío
   useEffect(() => {
-    const isEmpty = () => {
-      if (cart.length === 0 && isOpen) {
-        setIsOpen(false);
-      }
+    const isOpenOrNo = () => {
+      if (cart.length === 0 && isOpen) setIsOpen(false);
     };
-    isEmpty();
-  }, [cart.length]); // Solo depende de cart.length
-
-  // 3. Resetear paso, dirección y notas cuando se cierra el drawer
-  useEffect(() => {
-    const resetStep = () => {
-      if (!isOpen) {
-        setStep(1);
-        setAddress("");
-        setNotes("");
-      }
-    };
-
-    resetStep();
-  }, [isOpen]);
-
-  // ==================== FUNCIONES ====================
+    isOpenOrNo();
+  }, [cart.length, isOpen]);
 
   const generateWSMessage = (): string => {
     const productList = cart
       .map(
         (item) =>
-          `▪ ${item.quantity}x ${item.title} - $${(Number(item.price) * item.quantity).toLocaleString("es-AR")}`,
+          `• ${item.quantity}x ${item.title.toUpperCase()} ($${(Number(item.price) * item.quantity).toLocaleString("es-AR")})`,
       )
       .join("\n");
 
+    const header = `🛍️ *NUEVO PEDIDO - GROMET TAKE AWAY*`;
     const deliveryInfo =
       deliveryType === "delivery"
-        ? `🛵 *ENVÍO A:* ${address || "No especificada"}`
-        : `🏪 *RETIRO EN LOCAL*`;
+        ? `🛵 *ENTREGA A DOMICILIO*\n📍 *DIRECCIÓN:* ${address}`
+        : `🏪 *RETIRO EN LOCAL (Mitre y San Juan)*`;
 
     const notesInfo = notes ? `\n\n📝 *NOTAS:* ${notes}` : "";
 
-    return `🍔 *NUEVO PEDIDO - ${siteConfig.brand.name}*\n\n${deliveryInfo}\n\n*PRODUCTOS:*\n${productList}${notesInfo}\n\n*SUBTOTAL:* $${totalPrice.toLocaleString("es-AR")}\n${deliveryType === "delivery" ? `*ENVÍO:* $${DELIVERY_FEE.toLocaleString("es-AR")}\n` : ""}*TOTAL FINAL: $${finalTotal.toLocaleString("es-AR")}*`;
+    return `${header}\n\n${deliveryInfo}${notesInfo}\n\n*DETALLE DEL PEDIDO:*\n${productList}\n\n*SUBTOTAL:* $${totalPrice.toLocaleString("es-AR")}\n${deliveryType === "delivery" ? `*ENVÍO:* $${DELIVERY_FEE.toLocaleString("es-AR")}\n` : ""}*TOTAL FINAL: $${finalTotal.toLocaleString("es-AR")}*\n\n_(Enviado desde la Web de Gromet)_`;
   };
 
   const handleFinalSend = () => {
-    const message = generateWSMessage();
-    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-
-    window.open(whatsappUrl, "_blank");
+    window.open(
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(generateWSMessage())}`,
+      "_blank",
+    );
     setShowWSModal(false);
     setIsOpen(false);
   };
 
   return (
     <>
-      {/* Barra flotante inferior */}
+      {/* --- BARRA FLOTANTE (TRIGGER) --- */}
       <AnimatePresence>
         {totalItems > 0 && !isOpen && (
           <motion.div
-            initial={{ y: 80, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 80, opacity: 0 }}
-            className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[94%] max-w-md z-[110]"
+            initial={{ y: 100, x: "-50%" }}
+            animate={{ y: 0, x: "-50%" }}
+            exit={{ y: 100, x: "-50%" }}
+            className="fixed bottom-6 left-1/2 w-[92%] max-w-md z-[500]"
           >
             <button
               onClick={() => setIsOpen(true)}
-              className="w-full bg-slate-900 text-white p-4 rounded-[1.5rem] flex items-center justify-between shadow-2xl active:scale-95 transition-all"
+              className="btn-primary w-full h-18 px-6 flex items-center justify-between shadow-[0_20px_40px_rgba(230,57,70,0.3)]"
             >
-              <div className="flex items-center gap-3">
-                <motion.div
-                  key={totalItems}
-                  initial={{ scale: 0.8 }}
-                  animate={{ scale: 1 }}
-                  className="relative size-10 bg-orange-500 rounded-xl flex items-center justify-center"
-                >
-                  <ShoppingBag className="size-5" />
-                  <span className="absolute -top-2 -right-2 size-5 bg-white text-slate-900 text-[10px] font-black rounded-full flex items-center justify-center border-2 border-slate-900">
+              <div className="flex items-center gap-4">
+                <div className="relative">
+                  <ShoppingBag className="size-6 text-white" />
+                  <span className="absolute -top-2 -right-2 size-5 bg-white text-[var(--primary)] text-[11px] font-black rounded-full flex items-center justify-center border-2 border-[var(--primary)]">
                     {totalItems}
                   </span>
-                </motion.div>
-                <div className="text-left leading-tight">
-                  <span className="text-[10px] font-bold text-orange-400 uppercase tracking-widest">
-                    Ver mi pedido
-                  </span>
-                  <p className="text-sm font-bold">¡Todo listo!</p>
+                </div>
+                <div className="text-left">
+                  <p className="text-[10px] font-black uppercase tracking-widest opacity-80 leading-none">
+                    Mi Carrito
+                  </p>
+                  <p className="text-sm font-bold">Verificar pedido</p>
                 </div>
               </div>
-              <span className="text-base font-black">
+              <span className="text-xl font-black italic tracking-tighter">
                 ${finalTotal.toLocaleString("es-AR")}
               </span>
             </button>
@@ -159,262 +118,267 @@ export const CartDrawer = () => {
         )}
       </AnimatePresence>
 
-      {/* Drawer Principal */}
+      {/* --- DRAWER PRINCIPAL --- */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-            className="fixed inset-0 z-[130] bg-white flex flex-col overflow-hidden"
+            transition={{ type: "spring", damping: 30, stiffness: 300 }}
+            className="fixed inset-0 z-[550] flex justify-center bg-[var(--background)]"
           >
-            {/* Header */}
-            <div className="p-5 flex items-center justify-between border-b border-slate-100">
-              <div className="flex items-center gap-3">
-                {step === 2 && (
-                  <button
-                    onClick={() => setStep(1)}
-                    className="p-2 -ml-2 hover:bg-slate-100 rounded-full transition-colors"
-                  >
-                    <ChevronLeft size={24} />
-                  </button>
-                )}
-                <h2 className="text-lg font-bold text-slate-900">
-                  {step === 1 ? "Revisá tu pedido" : "Datos de entrega"}
-                </h2>
+            <div className="flex flex-col h-full w-full max-w-2xl lg:max-w-3xl">
+              {/* Header Gromet Style */}
+              <div className="px-6 py-6 flex items-center justify-between border-b border-[var(--border)] bg-white">
+                <div className="flex items-center gap-2">
+                  {step === 2 && (
+                    <button
+                      onClick={() => setStep(1)}
+                      className="p-2 -ml-2 text-[var(--primary)]"
+                    >
+                      <ChevronLeft size={28} strokeWidth={3} />
+                    </button>
+                  )}
+                  <h2 className="text-2xl font-black italic tracking-tighter uppercase">
+                    {step === 1 ? "Tu Pedido" : "Envío"}
+                  </h2>
+                </div>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="size-11 bg-[var(--background)] rounded-2xl flex items-center justify-center border border-[var(--border)] active:scale-90 transition-transform"
+                >
+                  <X
+                    size={24}
+                    className="text-[var(--muted)]"
+                    strokeWidth={3}
+                  />
+                </button>
               </div>
 
-              <button
-                onClick={() => setIsOpen(false)}
-                className="size-10 bg-slate-100 hover:bg-slate-200 text-slate-500 rounded-full flex items-center justify-center transition-colors"
-              >
-                <X size={20} strokeWidth={3} />
-              </button>
-            </div>
-
-            {/* Contenido */}
-            <div className="flex-1 overflow-y-auto bg-slate-50/50 p-4">
-              {step === 1 && (
-                <div className="space-y-3">
-                  {cart.map((item: CartItem) => (
-                    <div
-                      key={item.id}
-                      className="relative flex gap-3 p-4 bg-white rounded-2xl border border-slate-100 shadow-sm"
-                    >
-                      {/* Botón Borrar: Área de toque mejorada y fondo blanco sutil para no chocar con el texto */}
-                      <button
-                        onClick={() => removeFromCart(item.id)}
-                        className="absolute top-2 right-2 p-2 text-slate-300 hover:text-red-500 active:scale-90 transition-all z-10"
+              {/* Items / Forms Content */}
+              <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[var(--background)]">
+                {step === 1 ? (
+                  <div className="space-y-3">
+                    {cart.map((item) => (
+                      <div
+                        key={item.id}
+                        className="bg-white p-4 rounded-[var(--radius)] border border-[var(--border)] shadow-sm flex gap-4 relative"
                       >
-                        <Trash2 size={18} strokeWidth={2.5} />
-                      </button>
+                        <button
+                          onClick={() => removeFromCart(item.id)}
+                          className="absolute top-3 right-3 text-red-200 hover:text-[var(--primary)] transition-colors"
+                        >
+                          <Trash2 size={18} />
+                        </button>
 
-                      {/* Imagen: Aumenté a size-20 para que luzca más tentadora */}
-                      <div className="relative size-20 rounded-2xl overflow-hidden shrink-0 bg-slate-50 border border-slate-100/50">
-                        <Image
-                          src={
-                            item.image ||
-                            "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=200"
-                          }
-                          alt={item.title}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-
-                      {/* Contenido: Flex column con altura completa para empujar los elementos */}
-                      <div className="flex-1 min-w-0 flex flex-col justify-between h-20 py-0.5">
-                        {/* Título: padding-right (pr-8) para que un texto largo JAMÁS pise el botón de borrar */}
-                        <div className="pr-8">
-                          <h4 className="font-bold text-slate-900 text-[15px] leading-tight truncate">
-                            {item.title}
-                          </h4>
+                        <div className="relative size-20 rounded-2xl overflow-hidden shrink-0 border border-[var(--border)]">
+                          <Image
+                            src={item.image || ""}
+                            alt={item.title}
+                            fill
+                            className="object-cover"
+                          />
                         </div>
 
-                        {/* Alineación Horizontal: Precio a la izquierda, Selector a la derecha */}
-                        <div className="flex items-center justify-between w-full mt-auto">
-                          <p className="text-orange-500 font-black text-[15px]">
-                            ${Number(item.price).toLocaleString("es-AR")}
-                          </p>
+                        <div className="flex-1 flex flex-col justify-between py-1">
+                          <h4 className="font-black italic uppercase text-[15px] leading-none pr-8 line-clamp-1 italic">
+                            {item.title}
+                          </h4>
+                          <div className="flex items-center justify-between mt-auto">
+                            <p className="text-[var(--primary)] font-black text-lg tracking-tighter italic">
+                              $
+                              {(
+                                Number(item.price) * item.quantity
+                              ).toLocaleString("es-AR")}
+                            </p>
 
-                          {/* Selector de Cantidad: Ultra compacto y elegante */}
-                          <div className="flex items-center gap-1 bg-slate-100/80 rounded-xl p-1 border border-slate-200/50">
-                            <button
-                              onClick={() =>
-                                updateQuantity(item.id, item.quantity - 1)
-                              }
-                              disabled={item.quantity <= 1}
-                              className="size-7 flex items-center justify-center text-slate-600 disabled:opacity-30 active:bg-white active:rounded-lg transition-all"
-                            >
-                              <Minus size={14} strokeWidth={2.5} />
-                            </button>
-
-                            <span className="font-bold text-slate-900 text-[13px] w-6 text-center">
-                              {item.quantity}
-                            </span>
-
-                            <button
-                              onClick={() =>
-                                updateQuantity(item.id, item.quantity + 1)
-                              }
-                              className="size-7 flex items-center justify-center bg-white shadow-sm rounded-lg text-slate-900 active:scale-95 transition-all"
-                            >
-                              <Plus size={14} strokeWidth={2.5} />
-                            </button>
+                            <div className="flex items-center gap-3 bg-[var(--background)] p-1 rounded-xl border border-[var(--border)]">
+                              <button
+                                onClick={() =>
+                                  updateQuantity(item.id, item.quantity - 1)
+                                }
+                                disabled={item.quantity <= 1}
+                                className="size-8 flex items-center justify-center text-[var(--muted)] disabled:opacity-20"
+                              >
+                                <Minus size={16} strokeWidth={3} />
+                              </button>
+                              <span className="font-black text-sm w-4 text-center">
+                                {item.quantity}
+                              </span>
+                              <button
+                                onClick={() =>
+                                  updateQuantity(item.id, item.quantity + 1)
+                                }
+                                className="size-8 flex items-center justify-center bg-[var(--primary)] text-white rounded-lg shadow-md"
+                              >
+                                <Plus size={16} strokeWidth={3} />
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {step === 2 && (
-                <div className="space-y-8 p-2">
-                  <div className="grid grid-cols-2 gap-3">
-                    <button
-                      onClick={() => setDeliveryType("delivery")}
-                      className={cn(
-                        "flex flex-col items-center gap-2 py-5 rounded-2xl border transition-all",
-                        deliveryType === "delivery"
-                          ? "border-orange-500 bg-orange-50 text-orange-600"
-                          : "border-slate-200 hover:border-slate-300",
-                      )}
-                    >
-                      <Truck size={24} />
-                      <span className="text-sm font-bold">
-                        Envío a domicilio
-                      </span>
-                    </button>
-
-                    <button
-                      onClick={() => setDeliveryType("pickup")}
-                      className={cn(
-                        "flex flex-col items-center gap-2 py-5 rounded-2xl border transition-all",
-                        deliveryType === "pickup"
-                          ? "border-orange-500 bg-orange-50 text-orange-600"
-                          : "border-slate-200 hover:border-slate-300",
-                      )}
-                    >
-                      <Store size={24} />
-                      <span className="text-sm font-bold">Retiro en local</span>
-                    </button>
+                    ))}
                   </div>
+                ) : (
+                  <div className="space-y-6 pt-2">
+                    {/* Selectores de entrega estilo App */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <button
+                        onClick={() => setDeliveryType("pickup")}
+                        className={cn(
+                          "flex flex-col items-center gap-3 py-6 rounded-[var(--radius)] border-2 transition-all",
+                          deliveryType === "pickup"
+                            ? "border-[var(--primary)] bg-red-50/50 text-[var(--primary)]"
+                            : "border-[var(--border)] bg-white",
+                        )}
+                      >
+                        <Store size={28} strokeWidth={2.5} />
+                        <span className="text-xs font-black uppercase italic tracking-widest">
+                          Retiro Local
+                        </span>
+                      </button>
+                      <button
+                        onClick={() => setDeliveryType("delivery")}
+                        className={cn(
+                          "flex flex-col items-center gap-3 py-6 rounded-[var(--radius)] border-2 transition-all",
+                          deliveryType === "delivery"
+                            ? "border-[var(--primary)] bg-red-50/50 text-[var(--primary)]"
+                            : "border-[var(--border)] bg-white",
+                        )}
+                      >
+                        <Truck size={28} strokeWidth={2.5} />
+                        <span className="text-xs font-black uppercase italic tracking-widest">
+                          Delivery
+                        </span>
+                      </button>
+                    </div>
 
-                  <div className="space-y-6">
-                    {deliveryType === "delivery" && (
-                      <div>
-                        <label className="flex items-center gap-2 text-sm font-bold text-slate-700 mb-2">
-                          <MapPin size={18} className="text-orange-500" />
-                          Dirección de envío
+                    <div className="bg-white p-6 rounded-[var(--radius)] border border-[var(--border)] space-y-5 shadow-sm">
+                      {deliveryType === "delivery" && (
+                        <div className="space-y-2">
+                          <label className="flex items-center gap-2 text-[10px] font-black text-[var(--muted)] uppercase tracking-widest">
+                            <MapPin
+                              size={14}
+                              className="text-[var(--primary)]"
+                            />{" "}
+                            Dirección en Concordia
+                          </label>
+                          <input
+                            type="text"
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)}
+                            placeholder="Ej: San Juan 450, Piso 2"
+                            className="w-full p-4 bg-[var(--background)] border border-[var(--border)] rounded-2xl focus:border-[var(--primary)] outline-none font-bold text-sm"
+                          />
+                        </div>
+                      )}
+                      <div className="space-y-2">
+                        <label className="flex items-center gap-2 text-[10px] font-black text-[var(--muted)] uppercase tracking-widest">
+                          <FileText
+                            size={14}
+                            className="text-[var(--primary)]"
+                          />{" "}
+                          Notas para la cocina
                         </label>
-                        <input
-                          type="text"
-                          value={address}
-                          onChange={(e) => setAddress(e.target.value)}
-                          placeholder="Ej: Av. San Martín 1234, Depto 2B"
-                          className="w-full p-4 bg-white border border-slate-200 rounded-2xl focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none"
+                        <textarea
+                          rows={3}
+                          value={notes}
+                          onChange={(e) => setNotes(e.target.value)}
+                          placeholder="Ej: Sin mayonesa, papas bien crocantes..."
+                          className="w-full p-4 bg-[var(--background)] border border-[var(--border)] rounded-2xl focus:border-[var(--primary)] outline-none font-bold text-sm resize-none"
                         />
                       </div>
-                    )}
-
-                    <div>
-                      <label className="flex items-center gap-2 text-sm font-bold text-slate-700 mb-2">
-                        <FileText size={18} className="text-orange-500" />
-                        Aclaraciones / Notas
-                      </label>
-                      <textarea
-                        rows={4}
-                        value={notes}
-                        onChange={(e) => setNotes(e.target.value)}
-                        placeholder="Ej: Sin cebolla, agregar extra de queso..."
-                        className="w-full p-4 bg-white border border-slate-200 rounded-2xl focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none resize-none"
-                      />
                     </div>
                   </div>
-                </div>
-              )}
-            </div>
-
-            {/* Footer */}
-            <div className="p-6 bg-white border-t border-slate-100">
-              {deliveryType === "delivery" ? (
-                <div className="w-full h-5 flex justify-end italic text-xs font-semibold">
-                  Envío: {"$" + DELIVERY_FEE.toLocaleString("es-AR")}
-                </div>
-              ) : null}
-              <div className="flex justify-between items-center mb-5">
-                <span className="text-slate-600">Total</span>
-                <span className="text-2xl font-black">
-                  ${finalTotal.toLocaleString("es-AR")}
-                </span>
+                )}
               </div>
 
-              {step === 1 ? (
+              {/* Footer Total */}
+              <div className="p-8 bg-white border-t-4 border-[var(--background)]">
+                <div className="space-y-2 mb-6">
+                  <div className="flex justify-between items-center text-[var(--muted)] font-bold text-sm uppercase italic tracking-tighter">
+                    <span>Subtotal</span>
+                    <span>${totalPrice.toLocaleString("es-AR")}</span>
+                  </div>
+                  {deliveryType === "delivery" && (
+                    <div className="flex justify-between items-center text-[var(--accent)] font-bold text-sm uppercase italic tracking-tighter">
+                      <span>Envío</span>
+                      <span>${DELIVERY_FEE.toLocaleString("es-AR")}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between items-center pt-2 border-t border-[var(--border)]">
+                    <span className="text-lg font-black uppercase italic tracking-tighter">
+                      Total Final
+                    </span>
+                    <span className="text-3xl font-black text-[var(--card-foreground)] italic tracking-tighter">
+                      ${finalTotal.toLocaleString("es-AR")}
+                    </span>
+                  </div>
+                </div>
+
                 <button
-                  onClick={() => setStep(2)}
-                  className="w-full h-14 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl font-bold text-sm tracking-widest flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
-                >
-                  Continuar <ArrowRight size={20} />
-                </button>
-              ) : (
-                <button
-                  onClick={() => setShowWSModal(true)}
+                  onClick={() =>
+                    step === 1 ? setStep(2) : setShowWSModal(true)
+                  }
                   disabled={deliveryType === "delivery" && !address.trim()}
-                  className="w-full h-14 bg-orange-500 disabled:bg-slate-300 disabled:text-slate-500 text-white rounded-2xl font-bold text-sm tracking-widest flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
+                  className="btn-primary w-full h-16 text-lg uppercase italic tracking-tighter disabled:grayscale disabled:opacity-30"
                 >
-                  Enviar por WhatsApp <MessageCircle size={20} />
+                  {step === 1
+                    ? "Continuar con el pago"
+                    : "Confirmar por WhatsApp"}
+                  <ArrowRight size={22} strokeWidth={3} />
                 </button>
-              )}
+              </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Modal WhatsApp Preview */}
+      {/* --- PREVIEW WHATSAPP (MANTENIENDO TU LÓGICA) --- */}
       <AnimatePresence>
         {showWSModal && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[150] bg-black/70 flex items-center justify-center p-4"
+            className="fixed inset-0 z-[600] bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
           >
             <motion.div
-              initial={{ scale: 0.92, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="bg-white w-full max-w-sm rounded-3xl overflow-hidden shadow-xl"
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              className="bg-white w-full max-w-sm rounded-[2.5rem] overflow-hidden shadow-2xl"
             >
-              <div className="bg-[#075E54] p-4 text-white flex items-center gap-3">
-                <div className="size-10 bg-white/20 rounded-full flex items-center justify-center">
-                  <Flame size={22} />
+              <div className="bg-[#075E54] p-6 text-white flex items-center gap-4">
+                <div className="size-12 bg-white/20 rounded-2xl flex items-center justify-center shrink-0">
+                  <Clock size={24} />
                 </div>
                 <div>
-                  <p className="font-bold">{siteConfig.brand.name}</p>
-                  <p className="text-xs opacity-75">en línea</p>
+                  <p className="font-black italic uppercase tracking-widest leading-none">
+                    Gromet Take Away
+                  </p>
+                  <p className="text-[10px] font-bold opacity-75 uppercase mt-1 tracking-widest">
+                    Listo para recibir
+                  </p>
                 </div>
               </div>
-
-              <div className="bg-[#E5DDD5] p-6 min-h-[320px] flex items-end">
-                <div className="bg-[#DCF8C6] p-4 rounded-2xl rounded-tr-none text-sm leading-relaxed whitespace-pre-wrap">
+              <div className="bg-[#E5DDD5] p-6 min-h-[300px] flex items-end">
+                <div className="bg-[#DCF8C6] p-4 rounded-2xl rounded-tr-none text-[13px] font-medium leading-relaxed shadow-sm border border-black/5 whitespace-pre-wrap">
                   {generateWSMessage()}
                 </div>
               </div>
-
-              <div className="p-4 flex gap-3">
+              <div className="p-6 flex gap-3 bg-white">
                 <button
                   onClick={() => setShowWSModal(false)}
-                  className="flex-1 py-4 text-sm font-bold text-slate-500 hover:bg-slate-100 rounded-2xl transition-colors"
+                  className="flex-1 py-4 text-xs font-black uppercase text-[var(--muted)] hover:bg-[var(--background)] rounded-2xl transition-colors"
                 >
-                  Volver
+                  Atrás
                 </button>
                 <button
                   onClick={handleFinalSend}
-                  className="flex-[2] py-4 bg-[#25D366] hover:bg-[#128C7E] text-white rounded-2xl font-bold text-sm flex items-center justify-center gap-2 transition-colors"
+                  className="flex-[2] py-4 bg-[#25D366] text-white rounded-2xl font-black uppercase text-xs flex items-center justify-center gap-2 shadow-lg shadow-green-200"
                 >
-                  <Check size={20} strokeWidth={3} />
-                  Enviar Pedido
+                  <Check size={18} strokeWidth={4} /> ¡Enviar ahora!
                 </button>
               </div>
             </motion.div>

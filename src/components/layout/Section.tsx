@@ -33,7 +33,7 @@ export default function Section({
         /* 4. Layout Base */
         w-full
         flex
-
+        
         ${height === "content" && "h-fit"}
       
         
