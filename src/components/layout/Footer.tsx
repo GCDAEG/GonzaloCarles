@@ -1,13 +1,6 @@
 "use client";
 import React from "react";
-import {
-  Github,
-  Linkedin,
-  Mail,
-  ArrowUp,
-  Globe,
-  MessageCircle,
-} from "lucide-react";
+import { ArrowUp } from "lucide-react";
 import { useLenis } from "lenis/react";
 import { sections } from "@/lib/sections";
 import { BsGithub } from "react-icons/bs";

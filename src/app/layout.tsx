@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 import { FooterSection } from "../components/layout/Footer";
-import ExampleMessage from "@/components/layout/Sections/Example";
 import { Navbar } from "@/components/layout/Nav";
 import { roboto, lora, inter } from "@/lib/fonts";
 import ReactLenis from "lenis/react";

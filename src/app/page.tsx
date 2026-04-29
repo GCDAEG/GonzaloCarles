@@ -1,10 +1,6 @@
-import ProductCatalog from "@/components/layout/Sections/ProductCatalog";
 import HeroSection from "../components/layout/Sections/HeroSection";
 
-import LocationSection from "@/components/layout/Sections/LocationSection";
-import { client } from "@/sanity/client";
 import { SanityDocument } from "next-sanity";
-import { CartDrawer } from "@/components/ui/CartDrawer";
 import WorkSection from "@/components/layout/Sections/WorkSection";
 import StackSection from "@/components/layout/Sections/StackSection";
 import AboutSection from "@/components/layout/Sections/AboutSection";
@@ -41,16 +37,14 @@ export default async function Home() {
   const posts: SanityDocument[] = [];
   console.log("los posts", posts);
   return (
-    <main
-      className={`min-h-screen w-full font-base overflow-hidden`}
-    >
+    <main className={`min-h-screen w-full font-base overflow-hidden`}>
       <HeroSection />
       {/* <ProductCatalog posts={posts} /> */}
 
       {/* <LocationSection /> */}
-<WorkSection/>
-<StackSection/>
-<AboutSection/>
+      <WorkSection />
+      <StackSection />
+      <AboutSection />
       {/* <CartDrawer /> */}
       {/* <Testimonials /> */}
       {/* <WhatsAppChatInput /> */}
