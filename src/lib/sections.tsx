@@ -12,7 +12,19 @@ export const sections: NavSection[] = [
     label: "Inicio",
   },
   {
-    id: "catalog", // Coincide con el id del componente HowItWorks
-    label: "Menú",
+    id: "work",
+    label: "Proyectos", // Tu proyecto TUWEBHOY y otros
+  },
+  {
+    id: "stack",
+    label: "Capacidades", // El stack técnico (React, Next, etc)
+  },
+  {
+    id: "sobre-mi",
+    label: "Enfoque", // Tu biografía y filosofía como dev
+  },
+  {
+    id: "contacto",
+    label: "Contacto",
   },
 ];

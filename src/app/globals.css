@@ -1,64 +1,96 @@
 @import "tailwindcss";
 
-/* PALETA GROMET TAKE AWAY - Identidad Visual */
 :root {
-  /* Rojo-Naranja Gromet: Estimula el apetito y denota rapidez */
-  --primary: #E63946;         
+  /* Rojo Pro: Un tono técnico, eliminamos la calidez para que sea puro impacto */
+  --primary: #e69539;         
   --primary-foreground: #FFFFFF;
   
-  /* Color Crema/Hueso: Para que la web se sienta orgánica y no "clínica" */
-  --background: #FFFBF7;      
+  /* Paleta Acromática: Esencial para el Minimalismo Radical */
+  --background: #FDFDFD;      
+  --foreground: #0A0A0A;
+
+  /* Neutros para capas sutiles */
   --card: #FFFFFF;
-  --card-foreground: #1D1D1F;
+  --card-foreground: #0A0A0A;
+  --muted: #666666;
+  --muted-foreground: #A1A1AA;
+  --border: #EAEAEA; /* Un poco más claro para suavizar la grilla */
   
-  /* Verde "Fresco": Para etiquetas de 'Hecho en el momento' o 'Disponible' */
-  --accent: #2A9D8F;          
-  --muted: #8E8E93;
-  --border: #F1E9E0;
+  /* Acento de estado */
+  --accent: #10B981;          
   
-  --radius: 1.25rem;
+  /* Radio de borde: Geometría más pura (menos redondeado) */
+  --radius: 0.5rem;
+
+  /* Espaciado Sistemático (Para no abusar de margins manuales) */
+  --section-padding: clamp(4rem, 10vh, 8rem);
 }
 
-/* --- ESTILOS DE COMPONENTES GROMET --- */
 @layer components {
-  /* El botón de Gromet: Con un gradiente sutil para que parezca "pulsable" */
+  /* Botón: Evolución a estilo "Architect" */
   .btn-primary {
-    @apply bg-gradient-to-br from-[#E63946] to-[#D62828] text-white font-bold py-4 px-6 
-           rounded-[var(--radius)] transition-all duration-300 active:scale-95 
-           flex items-center justify-center gap-2 
-           shadow-[0_10px_20px_-5px_rgba(230,57,70,0.4)];
+    @apply relative overflow-hidden bg-[var(--foreground)] text-[var(--background)] 
+           text-[11px] font-black uppercase tracking-[0.2em] py-4 px-10 
+           rounded-sm transition-all duration-500 active:scale-95 
+           flex items-center justify-center gap-3
+           hover:bg-[var(--primary)] hover:text-white hover:tracking-[0.3em];
   }
 
-  /* Glass Card Gromet: Más cálida y con desenfoque profundo */
-  .glass-card {
-    @apply bg-white/80 backdrop-blur-2xl border border-white/50 shadow-2xl shadow-orange-900/5;
+  /* Grilla Editorial: Para que tus secciones respeten un ritmo visual */
+  .editorial-grid {
+    @apply grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-12;
   }
 
-  /* Category Pills: Estilo moderno para el menú de navegación */
-  .category-pill {
-    @apply px-5 py-2.5 rounded-full font-bold transition-all whitespace-nowrap
-           border-2 text-sm tracking-tight;
+  /* Utilidad de Título: Mejora el kerning (espaciado entre letras) */
+  .title-kerning {
+    @apply tracking-[-0.05em] lg:tracking-[-0.07em] leading-[0.85];
   }
 
-  .category-pill-active {
-    @apply bg-[var(--primary)] text-white border-[var(--primary)] shadow-lg shadow-red-200;
-  }
-
-  .category-pill-inactive {
-    @apply bg-white text-[var(--muted)] border-[var(--border)] hover:border-[var(--primary)]/30;
-  }
-
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
+  /* Scrollbar Minimalista (Solo si es necesaria) */
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
 
+/* --- REGLAS GLOBALES --- */
 body {
   background-color: var(--background);
-  color: var(--card-foreground);
-  -webkit-tap-highlight-color: transparent;
+  color: var(--foreground);
+  /* Optimizaciones tipográficas críticas */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "ss01", "ss02", "cv01", "cv03", "kern";
+}
+
+/* Selección de texto: El rojo solo aparece cuando el usuario interactúa */
+::selection {
+  background-color: var(--primary);
+  color: white;
+}
+
+/* Suavizado de Scroll para Lenis o Scroll nativo */
+html {
+  scroll-behavior: smooth;
+  cursor: default;
+}
+
+/* Clase para el "reveal" de imágenes (Fade + Scale) */
+.img-reveal {
+  @apply opacity-0 translate-y-4 scale-105 transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)];
+}
+
+.img-reveal.visible {
+  @apply opacity-100 translate-y-0 scale-100;
+}
+
+/* Media Queries para ajustes finos de padding */
+@media (max-width: 768px) {
+  :root {
+    --section-padding: 3rem;
+  }
 }

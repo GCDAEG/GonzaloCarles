@@ -5,6 +5,9 @@ import LocationSection from "@/components/layout/Sections/LocationSection";
 import { client } from "@/sanity/client";
 import { SanityDocument } from "next-sanity";
 import { CartDrawer } from "@/components/ui/CartDrawer";
+import WorkSection from "@/components/layout/Sections/WorkSection";
+import StackSection from "@/components/layout/Sections/StackSection";
+import AboutSection from "@/components/layout/Sections/AboutSection";
 // export const roboto = Roboto({
 //   subsets: ["latin"],
 //   display: "swap",
@@ -39,14 +42,16 @@ export default async function Home() {
   console.log("los posts", posts);
   return (
     <main
-      className={`min-h-screen w-full font-base max-w-2xl lg:max-w-3xl shadow-md`}
+      className={`min-h-screen w-full font-base overflow-hidden`}
     >
       <HeroSection />
-      <ProductCatalog posts={posts} />
+      {/* <ProductCatalog posts={posts} /> */}
 
-      <LocationSection />
-
-      <CartDrawer />
+      {/* <LocationSection /> */}
+<WorkSection/>
+<StackSection/>
+<AboutSection/>
+      {/* <CartDrawer /> */}
       {/* <Testimonials /> */}
       {/* <WhatsAppChatInput /> */}
     </main>

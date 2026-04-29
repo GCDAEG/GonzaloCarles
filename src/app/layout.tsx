@@ -70,7 +70,7 @@ export default function RootLayout({
           min-h-screen antialiased text-foreground bg-fixed
           overflow-x-hidden
           bg-background
-          min-w-screen
+         w-full
           flex flex-col items-center
         "
       >
@@ -81,7 +81,6 @@ export default function RootLayout({
             <Navbar />
             {children}
             <FooterSection />
-            <ExampleMessage />
           </CartProvider>
         </ReactLenis>
       </body>

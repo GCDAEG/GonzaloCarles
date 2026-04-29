@@ -23,7 +23,7 @@ export default function Section({
         /* 2. Paddings Horizontales (Consistencia de márgenes laterales) */
         px-4           /* Mobile: 16px */
         sm:px-8        /* Tablet: 32px */
-        lg:px-12       /* Desktop: 48px */
+        lg:px-24       /* Desktop: 96px */
         
         /* 3. Paddings Verticales (Ritmo visual y aire entre secciones) */
         py-8           /* Mobile: 32px */
