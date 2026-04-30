@@ -53,7 +53,7 @@ const AboutSection = () => {
 
             <motion.div
               variants={fadeIn}
-              className="grid grid-cols-1 md:grid-cols-2 gap-10 border-t border-[var(--border)] pt-12"
+              className="grid grid-cols-1  gap-10 border-t border-[var(--border)] pt-12"
             >
               <div className="flex flex-col gap-4">
                 <h4 className="text-[10px] font-black uppercase tracking-widest text-[var(--primary)]">
@@ -67,7 +67,7 @@ const AboutSection = () => {
                 </p>
               </div>
 
-              <div className="flex flex-col gap-4">
+              {/* <div className="flex flex-col gap-4">
                 <h4 className="text-[10px] font-black uppercase tracking-widest text-[var(--primary)]">
                   Trayectoria
                 </h4>
@@ -78,7 +78,7 @@ const AboutSection = () => {
                   capacidad de aprender y adaptarme a cualquier stack en tiempo
                   récord.
                 </p>
-              </div>
+              </div> */}
             </motion.div>
 
             {/* FRASE FINAL / MANIFIESTO */}
