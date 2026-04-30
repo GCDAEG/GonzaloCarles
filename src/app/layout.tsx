@@ -14,23 +14,22 @@ const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: {
-    default: "TWH Demo",
-    template: "%s | Tu Web Hoy",
+    default: "Gonzalo Carles Portfolio",
+    template: "%s | Portfolio",
   },
 
-  description:
-    "Creamos páginas web simples y modernas para emprendedores. Ideales para mostrar tu negocio y empezar a vender.",
+  description: "Gualeguaychú, Entre Rios, Argentina.",
 
   openGraph: {
-    title: "Tu web lista en días 🚀",
+    title: "Gonzalo Carles",
     description:
-      "Páginas web modernas, claras y accesibles. Ideal para emprendedores y negocios chicos.",
+      "Soy un desarrollador web impulsado por la autonomía. Mi camino no empezó en una facultad, sino en la necesidad de entender cómo funcionan las cosas y cómo hacerlas mejores.",
     images: [
       {
         url: "/preview.jpeg",
         width: 1200,
         height: 630,
-        alt: "Tu Web Hoy - Páginas web listas en días",
+        alt: "Gonzalo Carles - Portfolio",
       },
     ],
     type: "website",
@@ -39,9 +38,7 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "Tu web lista en días",
-    description:
-      "Webs modernas y accesibles para emprendedores. Lista para compartir y vender.",
+    title: "Gonzalo Carles",
     images: ["/preview.jpeg"],
   },
 };
