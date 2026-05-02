@@ -24,7 +24,7 @@ export async function generateMetadata({
   const isEs = locale === "es";
 
   return {
-    metadataBase: new URL("http://localhost:3000"), // Cambia esto por tu dominio real en producción ej: https://tuwebhoy.com
+    metadataBase: new URL("https://gonzalo-carles.vercel.app/"), // Cambia esto por tu dominio real en producción ej: https://tuwebhoy.com
     title: {
       default: "Gonzalo Carles Portfolio",
       template: "%s | Portfolio",
