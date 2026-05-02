@@ -1,0 +1,62 @@
+{
+  "Navigation": {
+    "home": "Home",
+    "work": "Work",
+    "stack": "Capabilities",
+    "about": "Approach",
+    "contact": "Contact"
+  },
+  "Hero": {
+    "top_badge": "Gonzalo — Portfolio 2026",
+    "available": "● Available",
+    "location": "Entre Ríos, AR",
+    "title_main": "WEB",
+    "title_highlight": "Developer.",
+    "description": "Building interfaces where technical precision and minimalist aesthetics meet.",
+    "stack_label": "Main Stack",
+    "projects_link": "Projects",
+    "contact_link": "Let's talk",
+    "status_text": "Solving real problems"
+  },
+  "About": {
+    "badge": "03 / Biography",
+    "title_main": "The",
+    "title_highlight": "Approach.",
+    "description": "I am an autonomy-driven web developer. My journey didn't start in a university, but from the need to understand how things work and how to make them better.",
+    "philosophy_title": "Philosophy",
+    "philosophy_desc": "I don't just write code; I design systems. My focus is on direct problem-solving, stripping away the unnecessary so that technology becomes an invisible yet powerful tool for the user.",
+    "principles_label": "Principles",
+    "principle_1": "Functional Aesthetics",
+    "principle_2": "Scalable Code",
+    "principle_3": "Direct Resolution"
+  },
+  "Stack": {
+    "badge": "02 / Capabilities",
+    "title_main": "Tech",
+    "title_highlight": "Stack.",
+    "description": "Curated tools for building scalable, high-performance products."
+  },
+  "Work": {
+    "badge": "01 / Selected Work",
+    "title_main": "Featured",
+    "title_highlight": "Projects.",
+    "explore_case": "Explore Case",
+    "projects": {
+      "tuwebhoy": {
+        "category": "Automation Platform",
+        "description": "Development of a digital ecosystem for local businesses, integrating dynamic catalogs with direct WhatsApp ordering to optimize the sales cycle."
+      }
+    }
+  },
+  "Footer": {
+    "badge": "04 / Contact",
+    "title_main": "Shall we talk",
+    "title_highlight": "now?",
+    "email_label": "Email",
+    "nav_label": "Navigation",
+    "role": "Gonzalo / Web Developer",
+    "location_rights": "— Entre Ríos, Argentina",
+    "back_to_top": "Top",
+    "built_with": "Built with Next.js & Framer Motion"
+  }
+}

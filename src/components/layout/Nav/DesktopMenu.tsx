@@ -5,6 +5,7 @@ import { useLenis } from "lenis/react";
 import { cn } from "@/lib/utils";
 import { useRouter, usePathname } from "next/navigation";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 const DesktopMenu = ({
   sections,
@@ -16,6 +17,9 @@ const DesktopMenu = ({
   const lenis = useLenis();
   const router = useRouter();
   const pathname = usePathname();
+
+  // Traemos las traducciones de la barra de navegación
+  const t = useTranslations("Navigation");
 
   const handleNavigation = (id: string) => {
     if (pathname !== "/") {
@@ -32,7 +36,6 @@ const DesktopMenu = ({
   return (
     <nav className="fixed top-0 left-0 w-full z-[100] h-24 hidden lg:flex items-center bg-[var(--background)]/50 backdrop-blur-sm">
       <div className="container mx-auto px-16 flex justify-between items-center h-full">
-        
         {/* NOMBRE PERSONAL - Identidad como Autor */}
         <button
           onClick={() => handleNavigation("hero")}
@@ -57,19 +60,24 @@ const DesktopMenu = ({
                     onClick={() => handleNavigation(s.id)}
                     className={cn(
                       "text-[10px] font-bold uppercase tracking-[0.25em] transition-all duration-500",
-                      isActive 
-                        ? "text-[var(--foreground)]" 
-                        : "text-[var(--muted)] hover:text-[var(--foreground)] opacity-50 hover:opacity-100"
+                      isActive
+                        ? "text-[var(--foreground)]"
+                        : "text-[var(--muted)] hover:text-[var(--foreground)] opacity-50 hover:opacity-100",
                     )}
                   >
-                    {s.label}
+                    {/* Imprimimos el nombre traducido según el dictKey */}
+                    {t(s.dictKey)}
                   </button>
                   {/* Línea de activación minimalista */}
                   {isActive && (
                     <motion.div
                       layoutId="nav-underline"
                       className="absolute -bottom-1 left-0 w-full h-[1.5px] bg-[var(--primary)]"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 30,
+                      }}
                     />
                   )}
                 </li>
@@ -80,11 +88,12 @@ const DesktopMenu = ({
           {/* DISPONIBILIDAD / CONTACTO RÁPIDO */}
           <div className="flex items-center gap-4 border-l border-[var(--border)] pl-12">
             <div className="size-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
-            <button 
+            <button
               onClick={() => router.push("/contacto")}
               className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--foreground)] hover:text-[var(--primary)] transition-colors"
             >
-              Contactar
+              {/* Reutilizamos la traducción de contacto */}
+              {t("contact")}
             </button>
           </div>
         </div>

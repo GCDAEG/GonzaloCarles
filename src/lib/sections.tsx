@@ -1,30 +1,14 @@
 // /src/lib/sections.ts
-
 export type NavSection = {
   id: string;
-  label: string;
+  dictKey: string; // <-- Agregamos esta propiedad
   href?: string;
 };
 
 export const sections: NavSection[] = [
-  {
-    id: "hero",
-    label: "Inicio",
-  },
-  {
-    id: "work",
-    label: "Proyectos", // Tu proyecto TUWEBHOY y otros
-  },
-  {
-    id: "stack",
-    label: "Capacidades", // El stack técnico (React, Next, etc)
-  },
-  {
-    id: "sobre-mi",
-    label: "Enfoque", // Tu biografía y filosofía como dev
-  },
-  {
-    id: "contacto",
-    label: "Contacto",
-  },
+  { id: "hero", dictKey: "home" },
+  { id: "work", dictKey: "work" },
+  { id: "stack", dictKey: "stack" },
+  { id: "sobre-mi", dictKey: "about" },
+  { id: "contacto", dictKey: "contact" },
 ];

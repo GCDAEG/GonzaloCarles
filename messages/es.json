@@ -1,0 +1,62 @@
+{
+  "Navigation": {
+    "home": "Inicio",
+    "work": "Proyectos",
+    "stack": "Capacidades",
+    "about": "Enfoque",
+    "contact": "Contacto"
+  },
+  "Hero": {
+    "top_badge": "Gonzalo — Portfolio 2026",
+    "available": "● Disponible",
+    "location": "Entre Ríos, AR",
+    "title_main": "WEB",
+    "title_highlight": "Developer.",
+    "description": "Construyendo interfaces donde la precisión técnica y la estética minimalista se encuentran.",
+    "stack_label": "Main Stack",
+    "projects_link": "Proyectos",
+    "contact_link": "Hablemos",
+    "status_text": "Resolviendo problemas reales"
+  },
+  "About": {
+    "badge": "03 / Biografía",
+    "title_main": "El",
+    "title_highlight": "Enfoque.",
+    "description": "Soy un desarrollador web impulsado por la autonomía. Mi camino no empezó en una facultad, sino en la necesidad de entender cómo funcionan las cosas y cómo hacerlas mejores.",
+    "philosophy_title": "Filosofía",
+    "philosophy_desc": "No solo escribo código; diseño sistemas. Mi enfoque está en la resolución directa de problemas, eliminando lo innecesario para que la tecnología sea una herramienta invisible pero potente para el usuario.",
+    "principles_label": "Principios",
+    "principle_1": "Estética Funcional",
+    "principle_2": "Código Escalable",
+    "principle_3": "Resolución Directa"
+  },
+  "Stack": {
+    "badge": "02 / Capacidades",
+    "title_main": "Tech",
+    "title_highlight": "Stack.",
+    "description": "Herramientas seleccionadas para construir productos escalables y de alto rendimiento."
+  },
+  "Work": {
+    "badge": "01 / Selección de Trabajos",
+    "title_main": "Proyectos",
+    "title_highlight": "Destacados.",
+    "explore_case": "Explorar Caso",
+    "projects": {
+      "tuwebhoy": {
+        "category": "Plataforma de Automatización",
+        "description": "Desarrollo de un ecosistema digital para negocios locales, integrando catálogos dinámicos con pedidos directos a WhatsApp para optimizar el ciclo de venta."
+      }
+    }
+  },
+  "Footer": {
+    "badge": "04 / Contacto",
+    "title_main": "¿Hablamos",
+    "title_highlight": "ahora?",
+    "email_label": "Email",
+    "nav_label": "Navegación",
+    "role": "Gonzalo / Web Developer",
+    "location_rights": "— Entre Ríos, Argentina",
+    "back_to_top": "Top",
+    "built_with": "Built with Next.js & Framer Motion"
+  }
+}

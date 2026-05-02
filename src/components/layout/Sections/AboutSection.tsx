@@ -2,8 +2,11 @@
 import React from "react";
 import { motion, Variants } from "framer-motion";
 import Section from "../Section";
+import { useTranslations } from "next-intl";
 
 const AboutSection = () => {
+  const t = useTranslations("About");
+
   const fadeIn: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -24,12 +27,12 @@ const AboutSection = () => {
           {/* TÍTULO IZQUIERDO */}
           <div className="md:col-span-4 sticky top-32">
             <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--primary)] mb-4">
-              03 / Biografía
+              {t("badge")}
             </p>
             <h2 className="text-4xl md:text-5xl font-black title-kerning uppercase">
-              El <br />{" "}
+              {t("title_main")} <br />{" "}
               <span className="italic font-light lowercase text-[var(--muted)]">
-                Enfoque.
+                {t("title_highlight")}
               </span>
             </h2>
           </div>
@@ -46,39 +49,21 @@ const AboutSection = () => {
               variants={fadeIn}
               className="text-2xl md:text-4xl font-medium leading-[1.1] tracking-tight text-[var(--foreground)]"
             >
-              Soy un desarrollador web impulsado por la autonomía. Mi camino no
-              empezó en una facultad, sino en la necesidad de entender cómo
-              funcionan las cosas y cómo hacerlas mejores.
+              {t("description")}
             </motion.p>
 
             <motion.div
               variants={fadeIn}
-              className="grid grid-cols-1  gap-10 border-t border-[var(--border)] pt-12"
+              className="grid grid-cols-1 gap-10 border-t border-[var(--border)] pt-12"
             >
               <div className="flex flex-col gap-4">
                 <h4 className="text-[10px] font-black uppercase tracking-widest text-[var(--primary)]">
-                  Filosofía
+                  {t("philosophy_title")}
                 </h4>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  No solo escribo código; diseño sistemas. Mi enfoque está en la
-                  resolución directa de problemas, eliminando lo innecesario
-                  para que la tecnología sea una herramienta invisible pero
-                  potente para el usuario.
+                  {t("philosophy_desc")}
                 </p>
               </div>
-
-              {/* <div className="flex flex-col gap-4">
-                <h4 className="text-[10px] font-black uppercase tracking-widest text-[var(--primary)]">
-                  Trayectoria
-                </h4>
-                <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  Desde Entre Ríos, he construido soluciones que van desde la
-                  automatización de procesos mediante scraping hasta catálogos
-                  digitales interactivos. Ser autodidacta me ha dado la
-                  capacidad de aprender y adaptarme a cualquier stack en tiempo
-                  récord.
-                </p>
-              </div> */}
             </motion.div>
 
             {/* FRASE FINAL / MANIFIESTO */}
@@ -87,26 +72,26 @@ const AboutSection = () => {
               className="bg-[var(--foreground)] text-[var(--background)] p-8 md:p-12 rounded-sm mt-8"
             >
               <p className="text-[11px] font-black uppercase tracking-[0.3em] mb-6 opacity-50">
-                Principios
+                {t("principles_label")}
               </p>
               <div className="flex flex-col gap-4 text-xl md:text-2xl font-bold italic tracking-tighter">
                 <span className="flex items-center gap-4">
                   <span className="text-[var(--primary)] text-sm not-italic">
                     01
                   </span>{" "}
-                  Estética Funcional
+                  {t("principle_1")}
                 </span>
                 <span className="flex items-center gap-4 border-t border-white/10 pt-4">
                   <span className="text-[var(--primary)] text-sm not-italic">
                     02
                   </span>{" "}
-                  Código Escalable
+                  {t("principle_2")}
                 </span>
                 <span className="flex items-center gap-4 border-t border-white/10 pt-4">
                   <span className="text-[var(--primary)] text-sm not-italic">
                     03
                   </span>{" "}
-                  Resolución Directa
+                  {t("principle_3")}
                 </span>
               </div>
             </motion.div>

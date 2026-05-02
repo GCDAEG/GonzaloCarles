@@ -1,4 +1,8 @@
 import type { NextConfig } from "next";
+import createNextIntlPlugin from 'next-intl/plugin';
+
+// Automáticamente buscará el archivo en src/i18n/request.ts
+const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
@@ -54,4 +58,5 @@ devIndicators: false,
   },
 };
 
-export default nextConfig;
+
+export default withNextIntl(nextConfig);

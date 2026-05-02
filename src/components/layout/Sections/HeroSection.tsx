@@ -4,8 +4,11 @@ import Image from "next/image";
 import { motion, Variants } from "framer-motion";
 import { ArrowDownRight, Globe } from "lucide-react";
 import Section from "../Section";
+import { useTranslations } from "next-intl";
 
 const HeroSection = () => {
+  const t = useTranslations("Hero");
+
   const fadin: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -32,14 +35,14 @@ const HeroSection = () => {
           className="flex justify-between items-end border-b border-[var(--border)] pb-4"
         >
           <span className="text-[10px] font-black uppercase tracking-[0.4em]">
-            Gonzalo — Portfolio 2026
+            {t("top_badge")}
           </span>
           <div className="hidden sm:flex gap-10">
             <span className="text-[9px] font-bold uppercase tracking-widest text-[var(--accent)]">
-              ● Disponible
+              {t("available")}
             </span>
             <span className="text-[9px] font-bold uppercase tracking-widest opacity-40">
-              Entre Ríos, AR
+              {t("location")}
             </span>
           </div>
         </motion.div>
@@ -50,9 +53,9 @@ const HeroSection = () => {
           <div className="lg:col-span-7 flex flex-col gap-8">
             <motion.div variants={fadin} className="flex flex-col">
               <h1 className="text-[15vw] lg:text-[9vw] font-black leading-[0.8] tracking-tighter uppercase">
-                WEB <br />
+                {t("title_main")} <br />
                 <span className="text-[var(--primary)] italic font-light lowercase">
-                  Developer.
+                  {t("title_highlight")}
                 </span>
               </h1>
             </motion.div>
@@ -61,8 +64,7 @@ const HeroSection = () => {
               variants={fadin}
               className="max-w-md text-lg md:text-xl font-medium leading-relaxed text-[var(--muted)]"
             >
-              Construyendo interfaces donde la precisión técnica y la estética
-              minimalista se encuentran.
+              {t("description")}
             </motion.p>
           </div>
 
@@ -85,10 +87,10 @@ const HeroSection = () => {
               </div>
               <div className="absolute -bottom-4 -right-4 bg-[var(--background)] p-3 border border-[var(--border)] md:block">
                 <p className="text-[8px] font-black uppercase tracking-[0.2em] leading-none">
-                  Main Stack
+                  {t("stack_label")}
                 </p>
                 <p className="text-[10px] font-bold mt-1">
-                  TALWINDCSS / NEXTJS / TYPESCRIPT
+                  TAILWIND / NEXTJS / TYPESCRIPT
                 </p>
               </div>
             </div>
@@ -105,21 +107,21 @@ const HeroSection = () => {
               href="#proyectos"
               className="group flex items-center gap-2 text-[11px] font-black uppercase tracking-widest"
             >
-              Proyectos
+              {t("projects_link")}
               <ArrowDownRight className="size-4 opacity-30 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
             </a>
             <a
               href="#contacto"
               className="text-[11px] font-black uppercase tracking-widest opacity-30 hover:opacity-100 transition-all"
             >
-              Hablemos
+              {t("contact_link")}
             </a>
           </div>
 
           <div className="flex items-center gap-3 opacity-30">
             <Globe className="size-3" />
             <span className="text-[9px] font-bold uppercase tracking-widest">
-              Resolviendo problemas reales
+              {t("status_text")}
             </span>
           </div>
         </motion.div>

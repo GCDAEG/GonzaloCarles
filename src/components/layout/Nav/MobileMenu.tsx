@@ -4,10 +4,10 @@ import { NavSection } from "@/lib/sections";
 import Link from "next/link";
 import { X, Menu, Globe, ArrowUpRight } from "lucide-react";
 import { useLenis } from "lenis/react";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 interface MobileMenuProps {
   sections: NavSection[];
@@ -18,6 +18,11 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ sections, activeSection }) => {
   const [open, setOpen] = useState(false);
   const lenis = useLenis();
   const pathname = usePathname();
+
+  // Importamos las traducciones necesarias
+  const t = useTranslations("Navigation");
+  const tHero = useTranslations("Hero");
+  const tFooter = useTranslations("Footer");
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "unset";
@@ -80,7 +85,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ sections, activeSection }) => {
               <div className="flex justify-between items-center px-8 pt-10 pb-12">
                 <div className="flex flex-col">
                   <span className="text-[10px] font-black text-[var(--primary)] uppercase tracking-[0.4em] mb-2">
-                    Navegación
+                    {tFooter("nav_label")}
                   </span>
                   <p className="text-[9px] font-bold text-[var(--muted)] uppercase tracking-widest">
                     Portfolio — 2026
@@ -98,7 +103,8 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ sections, activeSection }) => {
               <nav className="flex-1 px-8">
                 <ul className="space-y-6">
                   {sections.map((sec) => {
-                    const isActive = activeSection === sec.id && pathname === "/";
+                    const isActive =
+                      activeSection === sec.id && pathname === "/";
                     return (
                       <li key={sec.id}>
                         <button
@@ -107,17 +113,22 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ sections, activeSection }) => {
                             "w-full flex items-end justify-between py-2 border-b transition-all duration-500",
                             isActive
                               ? "border-[var(--primary)] text-[var(--foreground)]"
-                              : "border-[var(--border)] text-[var(--muted)]"
+                              : "border-[var(--border)] text-[var(--muted)]",
                           )}
                         >
-                          <span className={cn(
-                            "text-3xl font-black uppercase tracking-tighter",
-                            isActive ? "italic" : ""
-                          )}>
-                            {sec.label}
+                          <span
+                            className={cn(
+                              "text-3xl font-black uppercase tracking-tighter",
+                              isActive ? "italic" : "",
+                            )}
+                          >
+                            {/* Traducción del link */}
+                            {t(sec.dictKey)}
                           </span>
                           <span className="text-[10px] font-black mb-1 opacity-40">
-                            {isActive ? "ACTIVE" : "0" + (sections.indexOf(sec) + 1)}
+                            {isActive
+                              ? "ACTIVE"
+                              : "0" + (sections.indexOf(sec) + 1)}
                           </span>
                         </button>
                       </li>
@@ -132,15 +143,17 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ sections, activeSection }) => {
                   <div className="flex items-center gap-4">
                     <Globe className="size-4 text-[var(--primary)]" />
                     <span className="text-[11px] font-black uppercase tracking-widest">
-                      Entre Ríos, Argentina
+                      {tHero("location")}
                     </span>
                   </div>
                   <div className="h-[1px] w-full bg-[var(--border)]" />
-                  <a 
-                    href="mailto:tu-email@gmail.com"
+                  <a
+                    href="mailto:gonzalo.carles@outlook.com"
                     className="flex items-center justify-between group"
                   >
-                    <span className="text-xs font-black uppercase tracking-[0.2em]">Hablemos</span>
+                    <span className="text-xs font-black uppercase tracking-[0.2em]">
+                      {tHero("contact_link")}
+                    </span>
                     <ArrowUpRight className="size-4 group-hover:translate-x-1 transition-transform" />
                   </a>
                 </div>

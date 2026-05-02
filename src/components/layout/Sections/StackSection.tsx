@@ -2,8 +2,11 @@
 import React from "react";
 import { motion, Variants } from "framer-motion";
 import Section from "../Section";
+import { useTranslations } from "next-intl";
 
 const StackSection = () => {
+  const t = useTranslations("Stack");
+
   const techStack = [
     {
       category: "Frontend Core",
@@ -51,17 +54,16 @@ const StackSection = () => {
           {/* TÍTULO LATERAL */}
           <div className="md:col-span-4 mb-12 md:mb-0">
             <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--primary)] mb-4">
-              02 / Capacidades
+              {t("badge")}
             </p>
             <h2 className="text-4xl md:text-5xl font-black title-kerning uppercase">
-              Tech <br />{" "}
+              {t("title_main")} <br />{" "}
               <span className="italic font-light lowercase text-[var(--muted)]">
-                Stack.
+                {t("title_highlight")}
               </span>
             </h2>
             <p className="mt-6 text-sm text-[var(--muted)] max-w-[200px] leading-relaxed">
-              Herramientas seleccionadas para construir productos escalables y
-              de alto rendimiento.
+              {t("description")}
             </p>
           </div>
 
@@ -79,7 +81,6 @@ const StackSection = () => {
                 variants={itemVariants}
                 className="flex flex-col gap-6"
               >
-                {/* Categoría con línea decorativa */}
                 <div className="flex items-center gap-4">
                   <div className="h-[1px] w-8 bg-[var(--primary)]" />
                   <span className="text-[10px] font-black uppercase tracking-widest text-[var(--foreground)]">
@@ -87,7 +88,6 @@ const StackSection = () => {
                   </span>
                 </div>
 
-                {/* Lista de herramientas */}
                 <ul className="flex flex-col gap-3">
                   {item.tools.map((tool) => (
                     <li key={tool} className="group flex items-baseline gap-2">
