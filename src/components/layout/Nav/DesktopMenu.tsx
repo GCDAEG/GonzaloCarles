@@ -3,10 +3,9 @@ import React from "react";
 import { NavSection } from "@/lib/sections";
 import { useLenis } from "lenis/react";
 import { cn } from "@/lib/utils";
-import { useRouter, usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-
+import { Link, useRouter, usePathname } from "@/navigation";
 const DesktopMenu = ({
   sections,
   activeSection,

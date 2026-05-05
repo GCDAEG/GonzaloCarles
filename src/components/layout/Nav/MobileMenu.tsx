@@ -1,12 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { NavSection } from "@/lib/sections";
-import Link from "next/link";
 import { X, Menu, Globe, ArrowUpRight } from "lucide-react";
 import { useLenis } from "lenis/react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
-import { usePathname } from "next/navigation";
+import { Link, useRouter, usePathname } from "@/navigation";
 import { useTranslations } from "next-intl";
 
 interface MobileMenuProps {
